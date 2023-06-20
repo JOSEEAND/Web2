@@ -17,6 +17,6 @@ export class DetalleFactura{
     cantidad:number;
 
     @ManyToOne(()=>Producto,{cascade:true})
-    @JoinColumn({name:'codigoProdcuto',referencedColumnName:'codigo'})
+    @JoinColumn({name:'codigoProducto',referencedColumnName:'codigo'})
     producto:Producto;
 }

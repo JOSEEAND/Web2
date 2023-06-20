@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Producto } from "../entity/Producto";
+import { Proveedor } from "../entity/Proveedor";
 
 
 export class ProductoController{
@@ -36,8 +37,15 @@ export class ProductoController{
             stockMinimo,codigoProveedor}=req.body;
 
         if(!codigo || !descripcion || !precio || !stockMaximo 
-            || !stockMinimo || precio<0 || stockMaximo<0 || stockMinimo<0){
-            return res.status(404).json({mensaje:"Debe ingresar un valor valido"})
+            || !stockMinimo || precio<0 || stockMaximo<0 || stockMinimo<0
+            || !codigoProveedor){
+            return res.status(404).json({mensaje:"Debe ingresar un valor valido"});
+        }
+        const proveedorRepo=AppDataSource.getRepository(Proveedor);
+        const proveedor=await proveedorRepo.find();
+
+        if(!proveedor){
+            return res.status(404).json({message:'Proveedor inexistente'});
         }
 
         const productos=AppDataSource.getRepository(Producto);
@@ -53,9 +61,14 @@ export class ProductoController{
         producto.precio=precio;
         producto.stockMaximo=stockMaximo;
         producto.stockMinimo=stockMinimo;
+        producto.proveedor=codigoProveedor;
 
-        await productos.save(producto);
-        return res.status(201).json({mensaje:"Producto insertado"});
+        try {
+            await productos.save(producto);
+            return res.status(201).json({mensaje:"Producto insertado"});
+        } catch (error) {
+            return res.status(400).json({message:error});
+        }
     }
 
     static update=async(req:Request,res:Response)=>{

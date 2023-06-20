@@ -118,7 +118,7 @@ export class FacturaController{
 
             try {
                 await facturaRepo.save(factura);
-                return res.status(404).json({message:'Factura modificada'});
+                return res.status(200).json({message:'Factura modificada'});
             } catch (error) {
                 return res.status(404).json({message:'No se pudo modificar'});
             }
