@@ -5,6 +5,21 @@ import { Proveedor } from "../entity/Proveedor";
 
 export class ProveedorController{
 
+    static getAll=async(req:Request,res:Response)=>{
+        try {
+            const proveedorRepo=AppDataSource.getRepository(Proveedor);
+            const proveedor=await proveedorRepo.find()
+
+            if(proveedor.length==0){
+                return res.status(404).json({message:'No hay proveedores'});
+            }
+
+            return res.status(200).json(proveedor);
+        } catch (error) {
+            return res.status(400).json({message:error});
+        }
+    }
+
     static getById=async(req:Request, res:Response)=>{
 
         try {

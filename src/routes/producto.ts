@@ -4,6 +4,7 @@ import ProductoController from "../controllers/ProductoController";
 
 const routes=Router();
 
+routes.get('/',ProductoController.getAll);
 routes.get('/:codigo',ProductoController.getById);
 routes.post('/',ProductoController.add);
 routes.patch('/:codigo',ProductoController.update);

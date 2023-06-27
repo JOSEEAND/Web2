@@ -4,6 +4,7 @@ import ProveedorController from "../controllers/ProveedorController";
 
 const routes=Router();
 
+routes.get('/',ProveedorController.getAll)
 routes.get('/:codigo',ProveedorController.getById);
 routes.post('/',ProveedorController.add);
 routes.patch('/:codigo',ProveedorController.update);

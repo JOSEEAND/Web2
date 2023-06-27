@@ -6,6 +6,7 @@ import { Proveedor } from "./entity/Proveedor"
 import { Vendedor } from "./entity/Vendedor"
 import { Factura } from "./entity/Factura"
 import { DetalleFactura } from "./entity/DetalleFactura"
+import { Persona } from "./entity/Persona"
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -16,7 +17,7 @@ export const AppDataSource = new DataSource({
     database: "tienda",
     synchronize: true,
     logging: false,
-    entities: [Cliente, Producto, Proveedor, Vendedor, Factura, DetalleFactura],
+    entities: [Cliente,Producto,Proveedor,Vendedor,Factura,DetalleFactura,Persona],
     migrations: [],
     subscribers: [],
 })

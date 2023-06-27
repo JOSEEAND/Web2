@@ -6,6 +6,21 @@ import { Proveedor } from "../entity/Proveedor";
 
 export class ProductoController{
 
+    static getAll=async(req:Request,res:Response)=>{
+        try {
+            const productRepo=AppDataSource.getRepository(Producto);
+            const producto=await productRepo.find()
+
+            if(producto.length==0){
+                return res.status(404).json({message:'No hay productos'});
+            }
+
+            return res.status(200).json(producto);
+        } catch (error) {
+            return res.status(400).json({message:error});
+        }
+    }
+
     static getById=async(req:Request, res:Response)=>{
 
         try {

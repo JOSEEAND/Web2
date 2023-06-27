@@ -5,6 +5,21 @@ import { Vendedor } from "../entity/Vendedor";
 
 export class VendedorController{
 
+    static getAll=async(req:Request,res:Response)=>{
+        try {
+            const vendedorRepo=AppDataSource.getRepository(Vendedor);
+            const vendedor=await vendedorRepo.find()
+
+            if(vendedor.length==0){
+                return res.status(404).json({message:'No hay vendedores'});
+            }
+
+            return res.status(200).json(vendedor);
+        } catch (error) {
+            return res.status(400).json({message:error});
+        }
+    }
+
     static getById=async(req:Request, res:Response)=>{
         try {
             const codigo = parseInt(req.params["codigo"]);
