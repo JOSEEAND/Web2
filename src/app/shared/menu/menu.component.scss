@@ -1,0 +1,18 @@
+*{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.menu{
+    display: inline-block;
+    text-decoration: wavy;
+    text-shadow: 5px;
+    list-style: upper-roman;
+    list-style-position: inside;
+    margin-left: 5%;
+}
+
+ul>button{
+    margin-right: 10px;
+    color: black;
+    background-color:gainsboro;
+}
