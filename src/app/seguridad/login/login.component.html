@@ -2,7 +2,7 @@
 
 <h4>Debe iniciar sesion si desea mas informacion</h4>
 
-<form action="">
+<form action="" method="get">
     
     <label for="">User</label>
     <input type="text" name="user" id="user" placeholder="User">
@@ -10,5 +10,5 @@
     <label for="">Password</label>
     <input type="password" name="passw" id="passw" placeholder="Password">
 
-    <button routerLink=''>Ingresar</button>
+    <button (click)="login()">Ingresar</button>
 </form>

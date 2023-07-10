@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
+import { SeguridadComponent } from '../seguridad.component';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +11,11 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   constructor(private router: Router) { }
 
-  onLoginSuccess() {
-
-    //this.router.navigate(['./header.component.html', './menu.component.html', './footer.component.html']);
+  login() {
+    const hola = new AppComponent();
+    const chao = new SeguridadComponent();
+    chao.ingresar = true;
+    hola.ingresar = true;
+    this.router.navigate(['/main'] || ['/main1'] || ['/main2']);
   }
 }

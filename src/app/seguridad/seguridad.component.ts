@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./seguridad.component.scss']
 })
 export class SeguridadComponent {
-
+  ingresar = false;
 }
