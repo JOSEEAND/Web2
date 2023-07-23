@@ -1,0 +1,43 @@
+.container {
+    background-color: black; // Aplica el color negro al fondo
+  }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.foto{
+    width: 300px;
+    height: 200px;
+}
+
+tr {
+    display:flex; 
+    align-items:flex-start; 
+  }
+
+.example-card {
+    flex: 0.3;
+    padding-bottom:40px;
+    background-color:rgb(70,70,70);
+    color: white;
+}
+
+.alive-button {
+  width: 1px;
+  height: 1px;
+  min-width: 1px;
+  min-height: 1px;
+  background-color:lightgreen;
+  border-radius: 100%;
+}
+
+.dead-button {
+  width: 1px;
+  height: 1px;
+  min-width: 1px;
+  min-height: 1px;
+  background-color:red;
+  border-radius: 100%;
+}
