@@ -31,7 +31,7 @@ export class PersonajesComponent {
   vistoen = "Last know location: No esta en el lab";
   locacion = "First seen in: No esta en el lab";
 
-  isDead(status: string): boolean {
-    return status === 'Dead';
+  getStatusClass(status: string): string {
+    return status === 'dead' ? 'dead-circle' : (status === 'alive' ? 'alive-circle' : '');
   }
 }

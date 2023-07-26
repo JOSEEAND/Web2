@@ -6,8 +6,18 @@
         <mat-card-header>
           <mat-card-title>{{pers.name}}</mat-card-title>
           <mat-card-subtitle>
-            <!--<button mat-icon-button class="dot-button"></button>-->
-            {{pers.status}} - {{pers.species}}</mat-card-subtitle>
+            <div class="circle-container">
+              <div
+                class="circle"
+                [ngClass]="{
+                  alive: pers.status === 'Alive',
+                  dead: pers.status === 'Dead',
+                  unknown: pers.status === 'unknown'
+                }"
+              ></div>
+              {{ pers.status }} - {{pers.species}}
+            </div>
+            </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <p>{{pers.gender}}</p>

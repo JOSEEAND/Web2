@@ -24,20 +24,38 @@ tr {
     color: white;
 }
 
-.alive-button {
-  width: 1px;
-  height: 1px;
-  min-width: 1px;
-  min-height: 1px;
-  background-color:lightgreen;
-  border-radius: 100%;
+/* Estilos para el círculo */
+.circle-container {
+  display: flex;
+  align-items: center;
 }
 
-.dead-button {
-  width: 1px;
-  height: 1px;
-  min-width: 1px;
-  min-height: 1px;
-  background-color:red;
-  border-radius: 100%;
+.circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Estilo para el círculo cuando el personaje está vivo (verde) */
+.circle.alive {
+  background-color: green;
+}
+
+/* Estilo para el círculo cuando el personaje está muerto (rojo) */
+.circle.dead {
+  background-color: red;
+}
+
+/* Estilo para el círculo cuando el estado del personaje es desconocido (gris) */
+.circle.unknown {
+  background-color: gray;
+}
+
+/* Estilos para los botones de paginación */
+.pagination-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  padding: 20px;
 }
