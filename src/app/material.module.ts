@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 const lista = [
@@ -18,6 +20,8 @@ const lista = [
     MatDialogModule,
     FormsModule,
     MatSelectModule,
+    MatToolbarModule,
+    MatMenuModule
 ];
 
 //Los ... son para que no se visualice como una lista
