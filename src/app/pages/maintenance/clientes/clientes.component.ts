@@ -33,11 +33,11 @@ export class ClientesComponent {
   abrirDialog(usuario?: Usuario): void {
     if (usuario) {
       this.dialog.open(AdminClientesComponent, {
-        width: '600px', height: '600px', data: { usuario },
+        width: '650px', height: '650px', data: { usuario },
       });
     } else {
       this.dialog.open(AdminClientesComponent, {
-        width: '600px', height: '600px'
+        width: '650px', height: '650px'
       });
     }
   }

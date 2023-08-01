@@ -96,13 +96,13 @@ export class UsuarioController {
         try {
             const { id, nombre, apellido1, apellido2, correo, contrasena, rol } = req.body;
 
-            if (!id || !nombre || !apellido1 || !apellido2 || !correo
+            /*if (!id || !nombre || !apellido1 || !apellido2 || !correo
                 || !contrasena || !rol) {
                 return res.status(404).json({ mensaje: 'Ingrese valores validos' });
-            }
+            }*/
 
             const userRepo = AppDataSource.getRepository(Usuario);
-            let userList: Usuario;
+            let userList;
 
             try {
                 userList = await userRepo.findOneOrFail({ where: { id } })
@@ -117,6 +117,7 @@ export class UsuarioController {
             user.correo = correo;
             user.contrasena = contrasena;
             user.rol = rol;
+            user.estado = true;
 
             user.hashPassword();
 
