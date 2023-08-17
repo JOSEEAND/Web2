@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const lista = [
     MatButtonModule,
@@ -21,7 +21,8 @@ const lista = [
     FormsModule,
     MatSelectModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule
 ];
 
 //Los ... son para que no se visualice como una lista

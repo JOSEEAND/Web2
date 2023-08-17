@@ -3,7 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Usuario } from 'src/app/shared/models/usuario';
 import { UsuariosService } from 'src/app/shared/services/usuarios.service';
-import { AdminClientesComponent } from './admin-clientes/admin-clientes.component';
+import { AdminClientesComponent } from './admin-usuarios/admin-clientes.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-clientes',
@@ -17,7 +18,9 @@ export class ClientesComponent {
     /*'contrasena'*/, 'acciones'];
   dataSource = new MatTableDataSource();
 
-  constructor(private srvUsuarios: UsuariosService, public dialog: MatDialog) { }
+  constructor(private srvUsuarios: UsuariosService,
+    public dialog: MatDialog,
+    private msj: ToastrService) { }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -25,26 +28,40 @@ export class ClientesComponent {
   }
 
   ngOnInit() {
-    this.srvUsuarios.getAll().subscribe((datos) => {
+    /*this.srvUsuarios.getAll().subscribe((datos) => {
       this.dataSource.data = datos
+    });*/
+    this.cargarLista();
+  }
+
+  cargarLista(): void {
+    this.srvUsuarios.getAll().subscribe((datos) => {
+      this.dataSource.data = datos;
+    }, (error) => {
+      this.msj.error(error);
     });
   }
 
   abrirDialog(usuario?: Usuario): void {
+    let dialogOpen;
     if (usuario) {
-      this.dialog.open(AdminClientesComponent, {
+      dialogOpen = this.dialog.open(AdminClientesComponent, {
         width: '650px', height: '650px', data: { usuario },
       });
     } else {
-      this.dialog.open(AdminClientesComponent, {
+      dialogOpen = this.dialog.open(AdminClientesComponent, {
         width: '650px', height: '650px'
       });
     }
+    dialogOpen.afterClosed().subscribe((data) => {
+      console.log(data);
+      this.cargarLista();
+    })
   }
 
   delete(id: number): void {
     this.srvUsuarios.delete(id).subscribe((dato) => {
-      alert('Se elimino el usuario');
+      this.msj.success('Se elimino el usuario');
     }, (error) => {
       alert('Error al eliminar playazo');
     })

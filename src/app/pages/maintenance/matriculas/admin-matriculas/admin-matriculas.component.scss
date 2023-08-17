@@ -1,0 +1,21 @@
+form{
+    color: white;
+    margin-left: 15px;
+}
+h2{
+    color:white;
+    text-align: center;
+}
+button{
+    justify-content: center;
+}
+
+
+.curso-checkbox {
+    display: flex;
+    align-items: center;
+  
+    .mat-checkbox {
+      margin-right: 10px;
+    }
+}

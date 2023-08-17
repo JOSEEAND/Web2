@@ -110,7 +110,7 @@ export class UsuarioController {
                 return res.status(404).json({ mensaje: 'Usuario inexistente' });
             }
 
-            let user = new Usuario();
+            let user: Usuario;
             user.nombre = nombre;
             user.apellido1 = apellido1;
             user.apellido2 = apellido2;

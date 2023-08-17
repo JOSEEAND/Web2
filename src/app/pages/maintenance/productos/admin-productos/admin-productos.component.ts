@@ -1,6 +1,10 @@
+import { formatDate } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { ProductosForm } from 'src/app/shared/formsModels/productosForms';
+import { Categoria } from 'src/app/shared/models/categoria';
+import { CategoriasService } from 'src/app/shared/services/categorias.service';
 import { ProductosService } from 'src/app/shared/services/productos.service';
 
 @Component({
@@ -12,10 +16,14 @@ export class AdminProductosComponent {
 
   titulo = 'Crear producto';
   isCreate = true;
+  //[]=[] significa que permite inicializar vacia
+  listaCategorias: Categoria[] = [];
+
   constructor(public productosForm: ProductosForm,
     private svrProductos: ProductosService, //el nombre producto es el mismo del abrirDialog() en productoscomponent
-    @Inject(MAT_DIALOG_DATA) public data: { producto: any }) {
-  }
+    @Inject(MAT_DIALOG_DATA) public data: { producto: any },
+    private mensajeria: ToastrService,
+    private srvCategorias: CategoriasService) { }
 
   ngOnInit() {
     if (this.data?.producto) {
@@ -26,6 +34,15 @@ export class AdminProductosComponent {
       this.isCreate = true;
       this.titulo = 'Crear producto';
     }
+
+    this.cargarCombos();
+  }
+
+  cargarCombos(): void {
+    this.srvCategorias.getAll().subscribe((lista) => {
+      this.listaCategorias = lista;
+    });
+    //console.log(this.listaCategorias);
   }
 
   cargarDatosForm(): void {
@@ -36,7 +53,9 @@ export class AdminProductosComponent {
       nombre: this.data.producto.nombre,
       precio: this.data.producto.precio,
       stock: this.data.producto.stock,
-      fechaIngreso: this.data.producto.fechaIngreso,
+      fechaIngreso: formatDate(
+        this.data.producto.fechaIngreso, 'yyyy-MM-dd', 'en'),
+      categoria: this.data.producto.categoria.id,
       estado: true
     });
   }
@@ -48,20 +67,20 @@ export class AdminProductosComponent {
         this.svrProductos.guardar(this.productosForm.baseForm.value).subscribe(
           (dato) => {
             this.productosForm.baseForm.reset();
-            alert('Se guardo correctamente');
+            this.mensajeria.success('Se guardo correctamente');
           },
           (error) => {
-            alert('Error al guardar');
+            this.mensajeria.error(`Se produjo un error. ${error}`);
           });
       }
     } else {
       this.svrProductos.modificar(this.productosForm.baseForm.value).subscribe(
         (dato) => {
           this.productosForm.baseForm.reset();
-          alert('Se modifico correctamnte');
+          this.mensajeria.success('Se modifico correctamnte');
         },
         (error) => {
-          alert('Error al modificar');
+          this.mensajeria.error(`Se produjo un error. ${error}`);
         });
     }
 

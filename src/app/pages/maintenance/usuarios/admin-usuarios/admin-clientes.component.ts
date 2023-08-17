@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { UsuarioForm } from 'src/app/shared/formsModels/usuariosForm';
 import { UsuariosService } from 'src/app/shared/services/usuarios.service';
 
@@ -15,6 +16,7 @@ export class AdminClientesComponent {
 
   constructor(public usuarioForm: UsuarioForm,
     private srvUsuario: UsuariosService,
+    private msj: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: { usuario: any }) { }
 
 
@@ -48,15 +50,15 @@ export class AdminClientesComponent {
         this.srvUsuario.insert(this.usuarioForm.baseForm.value).
           subscribe((dato) => {
             this.usuarioForm.baseForm.reset();
-            alert('Usuario insertado');
-          }, (error) => { alert('No se pudo insertar') });
+            this.msj.success('Usuario insertado');
+          }, (error) => { this.msj.error('No se pudo insertar') });
       }
     } else {
       this.srvUsuario.update(this.usuarioForm.baseForm.value).
         subscribe((dato) => {
           this.usuarioForm.baseForm.reset();
-          alert('Usuario actualizado');
-        }, (error) => { alert('No se pudo actualizar') });
+          this.msj.success('Usuario actualizado');
+        }, (error) => { this.msj.error('No se pudo actualizar') });
     }
   }
 

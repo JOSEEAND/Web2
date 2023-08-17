@@ -17,6 +17,15 @@ es qie logra acceder, gracias a la inyeccion del constructor.
     </mat-form-field>
 
     <mat-form-field>
+        <mat-label>Categorias</mat-label>
+        <mat-select formControlName="categoria">
+          <mat-option *ngFor="let categoria of listaCategorias" [value]="categoria.id">
+            {{categoria.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <mat-form-field>
         <mat-label>Precio</mat-label>
         <input type="number" matInput formControlName="precio">
     </mat-form-field>
@@ -33,5 +42,6 @@ es qie logra acceder, gracias a la inyeccion del constructor.
 </form>
 
 <div>
-    <button mat-button color="primary" (click)="guardar()">Guardar</button>
+    <button mat-button color="primary" (click)="guardar()"[mat-dialog-close]="productosForm.baseForm.value">Guardar</button>
+    <button mat-button color="primary" mat-dialog-close>Cerrar</button>
 </div>

@@ -1,6 +1,7 @@
 import { IsNotEmpty, MaxLength, isEmail } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn, PrimaryColumn, OneToMany } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, PrimaryColumn, OneToMany, ManyToOne } from "typeorm";
 import { DetalleFactura } from "./DetalleFactura";
+import { CategoriaProducto } from "./CategoriaProducto";
 
 @Entity()
 export class Producto {
@@ -29,6 +30,8 @@ export class Producto {
     @Column()
     estado: boolean;
 
+    @ManyToOne(() => CategoriaProducto, (categoria) => categoria.productos)
+    categoria: CategoriaProducto;
 
     @OneToMany(() => DetalleFactura, (detalleFactura) => detalleFactura.producto)
     detallesFactura: DetalleFactura[];

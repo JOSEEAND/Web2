@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { MaintenanceRoutingModule } from './maintenance-routing.module';
 import { MaintenanceComponent } from './maintenance.component';
-import { ClientesComponent } from './clientes/clientes.component';
+import { ClientesComponent } from './usuarios/clientes.component';
 import { ProductosComponent } from './productos/productos.component';
 import { MaterialModule } from 'src/app/material.module';
 import { AdminProductosComponent } from './productos/admin-productos/admin-productos.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AdminClientesComponent } from './clientes/admin-clientes/admin-clientes.component';
+import { AdminClientesComponent } from './usuarios/admin-usuarios/admin-clientes.component';
+import { MatriculasComponent } from './matriculas/matriculas.component';
+import { AdminMatriculasComponent } from './matriculas/admin-matriculas/admin-matriculas.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { AdminClientesComponent } from './clientes/admin-clientes/admin-clientes
     ClientesComponent,
     ProductosComponent,
     AdminProductosComponent,
-    AdminClientesComponent
+    AdminClientesComponent,
+    MatriculasComponent,
+    AdminMatriculasComponent
   ],
   imports: [
     CommonModule,

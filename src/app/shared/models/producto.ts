@@ -1,3 +1,5 @@
+import { Categoria } from "./categoria";
+
 export interface Productos {
 
     //mismos valores que tiene la entidad Productos
@@ -5,6 +7,7 @@ export interface Productos {
     nombre: string;
     precio: number;
     stock: number;
-    fechaIngreso: Date;
+    fechaIngreso: Date
+    categoria: Categoria;
     estado: boolean;
 }

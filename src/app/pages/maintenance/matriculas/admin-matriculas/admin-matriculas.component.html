@@ -1,0 +1,22 @@
+<h2>Matricular Estudiante</h2>
+<form (ngSubmit)="guardarMatricula()" [formGroup]="matriculaForm.baseForm">
+  <mat-form-field>
+    <mat-label>Estudiante</mat-label>
+    <mat-select formControlName="IDEstudiante" required>
+      <mat-option *ngFor="let estudiante of estudiantes" [value]="estudiante.IDEstudiante">
+        {{ estudiante.Nombre }} {{ estudiante.Apellidos }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <section *ngIf="matriculaForm.baseForm.controls['IDEstudiante'].value" class="example-section"
+    [formGroup]="matriculaForm.baseForm">
+    <h4>Seleccione sus cursos:</h4>
+    <div *ngFor="let curso of cursos">
+      <p><mat-checkbox [formControlName]="curso.IDCurso">{{ curso.NombreCurso }}</mat-checkbox></p>
+    </div>
+  </section>
+
+  <button mat-button color="primary" type="submit">Guardar Matrícula</button>
+  <button mat-button color="primary" (click)="cerrarDialog()">Cancelar Matrícula</button>
+</form>

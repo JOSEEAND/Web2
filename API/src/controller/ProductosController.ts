@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Producto } from "../entity/Producto";
 import { validate } from "class-validator";
+import { CategoriaProducto } from "../entity/CategoriaProducto";
 
 export class ProductosController {
   static getAll = async (req: Request, resp: Response) => {
@@ -11,7 +12,7 @@ export class ProductosController {
     try {
       const productosRepo = AppDataSource.getRepository(Producto);
       const listaProductos = await productosRepo.find({
-        where: { estado: true },
+        where: { estado: true }, relations: { categoria: true }
       });
 
       if (listaProductos.length == 0) {
@@ -22,7 +23,7 @@ export class ProductosController {
 
       return resp.status(200).json(listaProductos);
     } catch (error) {
-      return resp.status(400).json({ mensaje: error });
+      return resp.status(400).json({ error: error });
     }
   };
 
@@ -43,7 +44,10 @@ export class ProductosController {
       let producto;
 
       try {
-        producto = await productosRepo.findOneOrFail({ where: { id: id, estado: true } });
+        producto = await productosRepo.findOneOrFail({
+          where: { id: id, estado: true },
+          relations: { categoria: true }
+        });
       } catch (error) {
         return resp.status(404).json({ mensaje: "No se encontro el Id" });
       }
@@ -61,7 +65,7 @@ export class ProductosController {
       //toda columna de la tabla, excepto el estado,
       //ya que se crea automaticamente cada que se insertan valores
 
-      const { id, nombre, precio, stock, fechaIngreso } = req.body;
+      const { id, nombre, precio, stock, fechaIngreso, categoria } = req.body;
 
       //validar datos de entrada
       if (!id) {
@@ -104,6 +108,7 @@ export class ProductosController {
       let producto = new Producto();
 
       producto.id = id;
+      producto.categoria = categoria;
       producto.nombre = nombre;
       producto.precio = precio;
       producto.stock = stock;
@@ -128,59 +133,46 @@ export class ProductosController {
   static update = async (req: Request, resp: Response) => {
 
     try {
-      const { id, nombre, precio, stock, fechaIngreso } = req.body;
-
-      if (!id) {
-        return resp.status(404).json({ mensaje: "Debe indicar el Id" });
-
-      }
-      if (!nombre) {
-        return resp.status(404).json({ mensaje: "Debe indicar el nombre" });
-
-      }
-      if (!precio) {
-        return resp.status(404).json({ mensaje: "Debe indicar el precio" });
-
-      }
-      if (precio < 0) {
-        return resp.status(404).json({ mensaje: "El precio debe ser mayor que 0" });
-
-      }
-      if (!stock) {
-        return resp.status(404).json({ mensaje: "Debe indicar el stock del producto" });
-
-      }
-      if (stock < 0) {
-        return resp.status(404).json({ mensaje: "El stock debe ser mayor que 0" });
-
-      }
+      const { id, nombre, precio, stock, fechaIngreso, categoria } = req.body;
 
       //findOneOrFail es siempre dentro de un trycatch
       const productosRepo = AppDataSource.getRepository(Producto);
+      const categoriaRepo = AppDataSource.getRepository(CategoriaProducto);
+
       let pro: Producto;
+      let cat: CategoriaProducto;
+
       try {
-        pro = await productosRepo.findOneOrFail({ where: { id } });
+        pro = await productosRepo.findOneOrFail({ where: { id, estado: true } });
       } catch (error) {
         return resp.status(404).json({ mensaje: "No existe el producto" });
       }
+      try {
+        cat = await categoriaRepo.findOneOrFail({ where: { id: categoria } });
+      } catch (error) {
+        return resp.status(404).json({ mensaje: "No existe la categoria" });
+      }
 
-      let fecha = new Date();
-      let producto = new Producto();
-      producto.nombre = nombre
-      producto.precio = precio
-      producto.stock = stock
-      producto.fechaIngreso = fecha;
+      //let fecha = new Date();
+      //let producto = new Producto();
+      pro.nombre = nombre
+      pro.categoria = cat;
+      pro.precio = precio
+      pro.stock = stock
+      pro.fechaIngreso = fechaIngreso;
+      pro.estado = true;
       //el id no se toca porque es llave primaria
 
       //validar con class-validator
-      const errors = await validate(producto, { validationError: { target: false, value: false } });
+      const errors = await validate(pro,
+        { validationError: { target: false, value: false } });
 
       if (errors.length > 0) {
         return resp.status(400).json(errors);
       }
 
       try {
-        await productosRepo.save(producto);
+        await productosRepo.save(pro);
         return resp.status(200).json({ mensaje: 'Producto actualizado correctamente' });
       } catch (error) {
         return resp.status(404).json({ mensaje: 'No se pudo guardar' });
