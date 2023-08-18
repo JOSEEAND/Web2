@@ -13,7 +13,7 @@
     [formGroup]="matriculaForm.baseForm">
     <h4>Seleccione sus cursos:</h4>
     <div *ngFor="let curso of cursos">
-      <p><mat-checkbox [formControlName]="curso.IDCurso">{{ curso.NombreCurso }}</mat-checkbox></p>
+      <p><mat-checkbox (change)="toggleCurso(curso.IDCurso)">{{ curso.NombreCurso }}</mat-checkbox></p>    
     </div>
   </section>
 

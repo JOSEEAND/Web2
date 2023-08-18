@@ -26,7 +26,7 @@ export class MatriculasComponent {
 
   cargarLista(): void {
     this.srvMatriculas.getAll().subscribe((datos) => {
-      //console.log(datos);
+      console.log(datos);
       this.dataSource.data = datos
     }, (error) => {
       this.msj.error(error);
