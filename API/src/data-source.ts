@@ -8,7 +8,6 @@ import { TipoCliente } from "./entity/TipoCliente"
 import { Factura } from "./entity/Factura"
 import { DetalleFactura } from "./entity/DetalleFactura"
 import { CategoriaProducto } from "./entity/CategoriaProducto"
-import { Profesor } from "./entity/Profesor"
 import { Cursos } from "./entity/Cursos"
 import { Estudiante } from "./entity/Estudiante"
 import { Matricula } from "./entity/Matricula"
@@ -24,7 +23,7 @@ export const AppDataSource = new DataSource({
     logging: false,
     entities: [Producto, Usuario, Persona, Cliente,
         TipoCliente, Factura, DetalleFactura,
-        CategoriaProducto, Profesor, Cursos, Estudiante,
+        CategoriaProducto, Cursos, Estudiante,
         Matricula],
     migrations: [],
     subscribers: [],

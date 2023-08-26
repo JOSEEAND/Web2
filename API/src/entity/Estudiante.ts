@@ -19,10 +19,6 @@ export class Estudiante {
     @IsNotEmpty({ message: 'Debe ingresar valores' })
     Apellidos: string;
 
-    @ManyToOne(() => Cursos, (curso) => curso.Estudiantes)
-    @JoinColumn({ name: 'IDCurso' })
-    Cursos: Cursos;
-
     @OneToMany(() => Matricula, (matricula) => matricula.Estudiantes)
     Matriculas: Matricula[];
 

@@ -7,7 +7,6 @@ import auth from "./auth";
 import factura from "./factura";
 import categorias from "./categorias";
 import estudiante from "./estudiante";
-import profesor from "./profesor";
 import cursos from "./cursos";
 import matriculas from "./matriculas";
 
@@ -19,7 +18,6 @@ routes.use("/Auth", auth);
 routes.use("/Facturas", factura);
 routes.use("/Categorias", categorias);
 routes.use("/Estudiantes", estudiante);
-routes.use("/Profesores", profesor);
 routes.use("/Cursos", cursos);
 routes.use("/Matriculas", matriculas);
 

@@ -12,7 +12,7 @@ export class MatriculasService {
   constructor(private http: HttpClient, private handler: ProductosService) { }
 
   getAll(): Observable<Matriculas[]> {
-    return this.http.get<Matriculas[]>('http://localhost:3000/Matriculas?relations=Cursos,Estudiantes').
+    return this.http.get<Matriculas[]>('http://localhost:3000/Matriculas').
       pipe(catchError(this.handler.handlerError));
 
     //cualquier vara quitar desde _expand=IDCurso&_expand=IDEstudiante

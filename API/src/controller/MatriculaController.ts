@@ -23,12 +23,12 @@ export class MatriculasController {
         try {
             const { IDMatricula, IDCurso, IDEstudiante } = req.body;
             const matriculasRepo = AppDataSource.getRepository(Matricula);
-            let matriculaExis = await matriculasRepo.findOne({
-                where: { IDMatricula, Estado: true }
+            /*let matriculaExis = await matriculasRepo.findOne({
+                where: { Estado: true, IDMatricula: IDMatricula }
             });
-            if (matriculaExis) return res.status(400).json({ message: 'Matricula existente' });
+            if (matriculaExis) return res.status(400).json({ message: 'Matricula existente' });*/
             let nuevaMatricula = new Matricula();
-            nuevaMatricula.IDMatricula = IDMatricula;
+            //nuevaMatricula.IDMatricula = IDMatricula;
             nuevaMatricula.Cursos = IDCurso;
             nuevaMatricula.Estudiantes = IDEstudiante;
             nuevaMatricula.Estado = true;

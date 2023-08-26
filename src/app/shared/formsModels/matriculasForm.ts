@@ -7,9 +7,10 @@ export class MatriculasForm {
     constructor(private fb: FormBuilder) {
         this.baseForm = this.fb.group({
             IDMatricula: [0, [Validators.required]],
-            IDCurso: [[], Validators.required],
-            IDEstudiante: [[], [Validators.required]],
-            Estado: [true]
+            Estado: [true],
+            Cursos: [0, Validators.required],
+            Estudiantes: [0, [Validators.required]],
+            //IDCurso IDEstudiante 0 o []
         })
     }
 }

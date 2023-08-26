@@ -3,8 +3,8 @@ import { Estudiante } from "./estudiante";
 
 export interface Matriculas {
     IDMatricula: number;
-    IDCurso: Cursos[];
-    IDEstudiante: Estudiante[];
     Estado: boolean;
+    Cursos: Cursos[];
+    Estudiantes: Estudiante[];
     //[] en curso y estudiante
 }

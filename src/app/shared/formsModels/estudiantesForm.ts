@@ -10,7 +10,6 @@ export class EstudiantesForm {
             IDEstudiante: [0, [Validators.required]],
             Nombre: ['', [Validators.required]],
             Apellidos: ['', [Validators.required]],
-            IDCurso: [0, [Validators.required]],
             Estado: [true]
         })
     }

@@ -11,7 +11,6 @@ export class EstudianteController {
             const repoEstudiantes = AppDataSource.getRepository(Estudiante);
             const listaEstudiantes = await repoEstudiantes.find({
                 where: { Estado: true },
-                relations: { Cursos: true }
             });
             if (listaEstudiantes.length === 0) return res.status(404).json({ message: 'No hay estudiantes' });
             return res.status(200).json(listaEstudiantes);
@@ -27,7 +26,7 @@ export class EstudianteController {
             let estudiante;
             try {
                 estudiante = await repoEstudiantes.findOneOrFail({
-                    where: { IDEstudiante, Estado: true }, relations: { Cursos: true }
+                    where: { IDEstudiante, Estado: true }
                 });
             } catch (error) {
                 return res.status(404).json({ message: 'Estudiante inexistente' });
@@ -48,7 +47,6 @@ export class EstudianteController {
             estudiante.IDEstudiante = IDEstudiante;
             estudiante.Nombre = Nombre;
             estudiante.Apellidos = Apellidos;
-            estudiante.Cursos = IDCurso;
             estudiante.Estado = true;
             const errors = await validate(estudiante,
                 { validationError: { target: false, value: false } });
@@ -74,14 +72,13 @@ export class EstudianteController {
             let estudiante: Estudiante;
             try {
                 estudiante = await repoEstudiantes.findOneOrFail({
-                    where: { IDEstudiante, Estado: true }, relations: { Cursos: true }
+                    where: { IDEstudiante, Estado: true }
                 });
             } catch (error) {
                 return res.status(404).json({ message: 'Estudiante inexistente' });
             }
             estudiante.Nombre = Nombre;
             estudiante.Apellidos = Apellidos;
-            estudiante.Cursos = IDCurso;
             estudiante.Estado = true;
             const errors = await validate(estudiante,
                 { validationError: { target: false, value: false } });

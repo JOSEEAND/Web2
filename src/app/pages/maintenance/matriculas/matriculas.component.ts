@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Matriculas } from 'src/app/shared/models/matricula';
 import { MatriculasService } from 'src/app/shared/services/matriculas.service';
 import { AdminMatriculasComponent } from './admin-matriculas/admin-matriculas.component';
 
@@ -13,42 +12,33 @@ import { AdminMatriculasComponent } from './admin-matriculas/admin-matriculas.co
 })
 export class MatriculasComponent {
 
-  displayedColumns: string[] = ['IDMatricula', 'IDCurso', 'IDEstudiante'];
+  displayedColumns: string[] = ['IDMatricula', 'Cursos', 'Estudiantes'];
   dataSource = new MatTableDataSource();
 
-  constructor(private srvMatriculas: MatriculasService,
-    private msj: ToastrService,
-    public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+    private srvMatriculas: MatriculasService,
+    private msj: ToastrService) { }
 
   ngOnInit() {
-    this.cargarLista();
+    this.cargarMatriculas();
   }
 
-  cargarLista(): void {
-    this.srvMatriculas.getAll().subscribe((datos) => {
-      console.log(datos);
-      this.dataSource.data = datos
+  cargarMatriculas(): void {
+    this.srvMatriculas.getAll().subscribe((dato) => {
+      console.log(dato);
+      this.dataSource.data = dato
     }, (error) => {
-      this.msj.error(error);
+      console.log(error);
+      this.msj.warning('No hay matriculas');
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  abrirDialog(): void {
-    const dialogOpen = this.dialog.open(AdminMatriculasComponent, {
-      width: '650px',
-      height: '600px',
+  abrir(): void {
+    const dialogRef = this.dialog.open(AdminMatriculasComponent, {
+      height: '400px', width: '750px'
     });
-
-    dialogOpen.afterClosed().subscribe((data) => {
-      console.log(data);
-      if (data) {
-        this.cargarLista();
-      }
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 }

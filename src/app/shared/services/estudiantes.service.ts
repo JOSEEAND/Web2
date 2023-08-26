@@ -25,4 +25,9 @@ export class EstudiantesService {
     return this.http.post<Estudiante>('http://localhost:3000/Estudiantes', estudiante).
       pipe(catchError(this.handler.handlerError));
   }
+
+  update(estudiante: Estudiante): Observable<Estudiante> {
+    return this.http.patch<Estudiante>('http://localhost:3000/Estudiantes/', estudiante).
+      pipe(catchError(this.handler.handlerError));
+  }
 }

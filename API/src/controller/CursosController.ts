@@ -11,7 +11,6 @@ export class CursosController {
             const repoCursos = AppDataSource.getRepository(Cursos);
             const listaCursos = await repoCursos.find({
                 where: { Estado: true },
-                relations: { Profesores: true }
             });
             if (listaCursos.length === 0) return res.status(404).json({ message: 'No hay cursos' });
             return res.status(200).json(listaCursos);
@@ -28,7 +27,6 @@ export class CursosController {
             try {
                 curso = await repoCursos.findOneOrFail({
                     where: { IDCurso, Estado: true },
-                    relations: { Profesores: true }
                 });
             } catch (error) {
                 return res.status(404).json({ message: 'Curso inexistente' });
@@ -75,7 +73,6 @@ export class CursosController {
             try {
                 curso = await repoCursos.findOneOrFail({
                     where: { IDCurso, Estado: true },
-                    relations: { Profesores: true }
                 });
             } catch (error) {
                 return res.status(404).json({ message: 'Curso inexistente' });

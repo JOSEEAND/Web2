@@ -1,5 +1,5 @@
 import { IsNotEmpty } from "class-validator";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Cursos } from "./Cursos";
 import { Estudiante } from "./Estudiante";
 
@@ -7,8 +7,8 @@ import { Estudiante } from "./Estudiante";
 @Entity()
 export class Matricula {
 
-    @PrimaryColumn()
-    @IsNotEmpty({ message: 'Debe ingresar valores' })
+    @PrimaryGeneratedColumn()
+    //@IsNotEmpty({ message: 'Qe' })
     IDMatricula: number;
 
     @ManyToOne(() => Cursos, (cursos) => cursos.Matriculas)

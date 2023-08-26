@@ -21,7 +21,7 @@ import { AdminMatriculasComponent } from './matriculas/admin-matriculas/admin-ma
     AdminProductosComponent,
     AdminClientesComponent,
     MatriculasComponent,
-    AdminMatriculasComponent
+    AdminMatriculasComponent,
   ],
   imports: [
     CommonModule,

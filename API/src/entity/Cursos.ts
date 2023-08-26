@@ -1,7 +1,6 @@
 import { IsNotEmpty } from "class-validator";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { Estudiante } from "./Estudiante";
-import { Profesor } from "./Profesor";
 import { Matricula } from "./Matricula";
 
 @Entity()
@@ -18,12 +17,6 @@ export class Cursos {
     @Column()
     @IsNotEmpty({ message: 'Debe ingresar valores' })
     Sede: string;
-
-    @OneToMany(() => Estudiante, (estudiante) => estudiante.Cursos)
-    Estudiantes: Estudiante[];
-
-    @OneToMany(() => Profesor, (profesor) => profesor.Cursos)
-    Profesores: Profesor[];
 
     @OneToMany(() => Matricula, (matricula) => matricula.Cursos)
     Matriculas: Matricula[];

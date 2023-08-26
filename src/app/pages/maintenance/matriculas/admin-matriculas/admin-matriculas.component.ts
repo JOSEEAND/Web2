@@ -1,12 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { CursosForm } from 'src/app/shared/formsModels/cursosForm';
-import { EstudiantesForm } from 'src/app/shared/formsModels/estudiantesForm';
 import { MatriculasForm } from 'src/app/shared/formsModels/matriculasForm';
 import { Cursos } from 'src/app/shared/models/curso';
 import { Estudiante } from 'src/app/shared/models/estudiante';
-import { Matriculas } from 'src/app/shared/models/matricula';
 import { CursosService } from 'src/app/shared/services/cursos.service';
 import { EstudiantesService } from 'src/app/shared/services/estudiantes.service';
 import { MatriculasService } from 'src/app/shared/services/matriculas.service';
@@ -18,74 +15,57 @@ import { MatriculasService } from 'src/app/shared/services/matriculas.service';
 })
 export class AdminMatriculasComponent {
 
-  estudiantes: Estudiante[] = [];
-  cursos: Cursos[] = [];
+  listaEstudiantes: Estudiante[] = [];
+  listaCursos: Cursos[] = [];
 
-  constructor(
-    public dialogRef: MatDialogRef<AdminMatriculasComponent>,
-    private srvMatriculas: MatriculasService,
-    private srvEstudiantes: EstudiantesService,
+  constructor(private msj: ToastrService,
     private srvCursos: CursosService,
-    @Inject(MAT_DIALOG_DATA) public data: { matricula?: Matriculas },
+    private srvEstudiantes: EstudiantesService,
+    private srvMatriculas: MatriculasService,
     public matriculaForm: MatriculasForm,
-    public cursosForm: CursosForm,
-    public estudiantesForm: EstudiantesForm,
-    private msj: ToastrService
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: { matricula: any }) { }
 
   ngOnInit() {
-    this.loadEstudiantes();
-    this.loadCursos();
-
-    if (this.data.matricula) {
-      this.estudiantesForm.baseForm.patchValue(this.data.matricula);
-      const cursosIds = this.data.matricula.IDCurso.map(curso => curso.IDCurso);
-      cursosIds.forEach(id => {
-        if (this.cursosForm.baseForm.controls[id]) {
-          this.cursosForm.baseForm.controls[id].setValue(true);
-        }
-      });
-    }
+    this.cargarCursos();
+    this.cargarEstudiantes();
   }
 
-  loadEstudiantes() {
-    this.srvEstudiantes.getAll().subscribe(estudiantes => {
-      this.estudiantes = estudiantes;
+  crearMatricula(): void {
+    this.matriculaForm.baseForm.patchValue({
+      Estado: true,
+      Cursos: this.data.matricula.Cursos,
+      Estudiantes: this.data.matricula.Estudiantes
     });
   }
 
-  loadCursos() {
-    this.srvCursos.getAll().subscribe(cursos => {
-      this.cursos = cursos;
-    });
-  }
-
-  guardarMatricula() {
+  guardarMatricula(): void {
     if (this.matriculaForm.baseForm.valid) {
-      const matricula = this.matriculaForm.baseForm.value;
-      const selectedCursos = this.getSelectedCursos();
-      matricula.cursos = selectedCursos;
-
-      this.srvMatriculas.create(matricula).subscribe((dato) => {
-        console.log(dato);
-        this.msj.success('Matricula creada correctamente');
-        this.dialogRef.close(true);
-      }, (error) => {
-        this.msj.error('No se pudo insertar la matricula');
-        console.log(error);
-      });
+      this.srvMatriculas.create(this.matriculaForm.baseForm.value).
+        subscribe((dato) => {
+          this.matriculaForm.baseForm.reset();
+          this.msj.success('Matricula almacenada!');
+        }, (error) => {
+          console.log(error);
+          this.msj.error('No se pudo almacenar la matricula');
+        });
     }
   }
 
-  cerrarDialog() {
-    this.dialogRef.close();
+  cargarEstudiantes(): void {
+    this.srvEstudiantes.getAll().subscribe((dato) => {
+      this.listaEstudiantes = dato;
+    }, (error) => {
+      console.log(error);
+      this.msj.warning('No hay estudiantes');
+    });
   }
 
-  getSelectedCursos() {
-    return this.cursos.filter(curso => this.cursosForm.baseForm.controls[curso.IDCurso.toString()].value);
-  }
-
-  toggleCurso(cursoID: number) {
-    this.cursosForm.baseForm.controls[cursoID].setValue(!this.cursosForm.baseForm.controls[cursoID].value);
+  cargarCursos(): void {
+    this.srvCursos.getAll().subscribe((dato) => {
+      this.listaCursos = dato;
+    }, (error) => {
+      console.log(error);
+      this.msj.warning('No hay cursos');
+    });
   }
 }
